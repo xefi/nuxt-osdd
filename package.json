@@ -1,0 +1,51 @@
+{
+  "name": "nuxt-osdd",
+  "version": "1.0.0",
+  "description": "Package pour gérer l'OSDD (Operating System Dependency Design) dans Nuxt",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "nuxt-osdd": "dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build",
+    "osdd:layer": "tsx src/scripts/generateLayer.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edepauw/nuxt-osdd.git"
+  },
+  "author": "Eliott Depauw",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edepauw/nuxt-osdd/issues"
+  },
+  "homepage": "https://github.com/edepauw/nuxt-osdd#readme",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "prompts": "^2.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@types/prompts": "^2.4.9",
+    "nuxt": "^4.4.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "peerDependencies": {
+    "nuxt": "^4.4.2"
+  }
+}
