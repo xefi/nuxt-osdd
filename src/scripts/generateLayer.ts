@@ -33,7 +33,7 @@ const buildPromptQuestions = (parsedArgs: Partial<LayerOptions>): prompts.Prompt
         questions.push({
             type: 'text',
             name: 'name',
-            message: 'Layer name:',
+            message: 'How do you want to name the layer?\n',
             hint: 'e.g. Authentication, Contracts, UserProfile',
             validate: (value: string) => value.length > 0 || 'Layer name is required'
         });
@@ -43,10 +43,10 @@ const buildPromptQuestions = (parsedArgs: Partial<LayerOptions>): prompts.Prompt
         questions.push({
             type: 'select',
             name: 'type',
-            message: 'Layer type:',
+            message: 'What type of layer do you want to create?\n',
             choices: [
-                { title: 'Functional  — business feature (e.g. Contracts, Posts)', value: 'functional' },
-                { title: 'Technical   — infrastructure (e.g. Authentication, Permission)', value: 'technical' }
+                { title: '📋 Functional - business feature (e.g. Contracts, Posts)', value: 'functional' },
+                { title: '🛠️  Technical  - infrastructure (e.g. Authentication, Permission)', value: 'technical' }
             ],
             initial: 0
         });
