@@ -1,6 +1,39 @@
 # nuxt-osdd
 
-Package for managing OSDD (Operating System Dependency Design) in Nuxt.
+**nuxt-osdd** brings Open Source Driven Development to Nuxt. Organize your application into independent, composable layers — each layer with its own components, composables, pages, and configuration.
+
+## Why OSDD?
+
+OSDD separates your application into two top-level buckets, keeping business logic and infrastructure concerns cleanly apart.
+
+### functional/
+
+Domain layers that represent business concerns — `functional/users`, `functional/orders`, `functional/billing`. Each owns its own components, pages, composables, and assets.
+
+### technical/
+
+Infrastructure layers shared across the application — authentication adapters, API clients, database configuration. Keeps cross-cutting concerns in one place.
+
+### Scalable by Design
+
+Add new layers without touching existing ones. The architecture scales naturally from a small app to a large monorepo — no big-bang refactors required.
+
+### Simplified Structure
+
+OSDD replaces Nuxt's default layers approach which adds unnecessary depth to your project structure.
+
+**Without OSDD** (Nuxt default):
+```
+/layers/functional/layers/<functionalLayer>/nuxt.config.ts
+```
+
+**With OSDD**:
+```
+/functional/<functionalLayer>/nuxt.config.ts
+/technical/<technicalLayer>/nuxt.config.ts
+```
+
+Your layers are directly at the project root, making your codebase flatter and easier to navigate.
 
 ## Installation
 
@@ -16,33 +49,22 @@ Easily create functional or technical layers with pre-configured templates.
 
 #### Usage
 
-**Main command (recommended)**
 ```bash
 npx nuxt-osdd osdd:layer <layer-name> [--technical|--functional]
 
-# Examples
-npx nuxt-osdd osdd:layer Authentication --functional
+# Examples - Technical layers (infrastructure)
+npx nuxt-osdd osdd:layer Authentication --technical
 npx nuxt-osdd osdd:layer Database --technical
-npx nuxt-osdd osdd:layer  # Interactive mode
+
+# Examples - Functional layers (business)
+npx nuxt-osdd osdd:layer Contracts --functional
+npx nuxt-osdd osdd:layer Posts --functional
+
+# Interactive mode
+npx nuxt-osdd osdd:layer
 
 # Display help
 npx nuxt-osdd --help
-```
-
-**Alternative: Via npm script in your project**
-
-If you've run `npm link nuxt-osdd` in your project, add to your `package.json`:
-```json
-{
-  "scripts": {
-    "osdd:layer": "nuxt-osdd osdd:layer"
-  }
-}
-```
-
-Then use:
-```bash
-npm run osdd:layer <layer-name> [--technical|--functional]
 ```
 
 The script will automatically create:
@@ -62,89 +84,66 @@ import { defineOSDDNuxtConfig } from 'nuxt-osdd';
 
 export default defineOSDDNuxtConfig({
   osdd: {
-    functional: ['Contracts', 'Posts'],
-    technical: ['Authentication', 'Permission'],
+    technical: ['Authentication', 'Permission'],  // Technical needs
+    functional: ['Contracts', 'Posts'],           // Business needs
   }
 });
 ```
 
-### 3. OSDDLayers (advanced)
+## Migration to OSDD
 
-Returns the raw array of relative layer paths, for manual use in `defineNuxtConfig`.
+Migrating your existing Nuxt application to OSDD is straightforward:
 
-#### Usage
+1. **Update your main `nuxt.config.ts`** — simply replace `defineNuxtConfig` with `defineOSDDNuxtConfig`:
+```typescript
+// Before
+import { defineNuxtConfig } from 'nuxt/config';
+
+export default defineNuxtConfig({
+  // your config
+});
+
+// After
+import { defineOSDDNuxtConfig } from 'nuxt-osdd';
+
+export default defineOSDDNuxtConfig({
+  osdd: {
+    technical: ['Authentication', 'Database'],
+    functional: ['Users', 'Orders'],
+  },
+  // your config
+});
+```
+
+2. **Create your layers** using the CLI command:
+```bash
+# Create technical layers
+npx nuxt-osdd osdd:layer Authentication --technical
+npx nuxt-osdd osdd:layer Database --technical
+
+# Create functional layers
+npx nuxt-osdd osdd:layer Users --functional
+npx nuxt-osdd osdd:layer Orders --functional
+```
+
+3. **Move your code** into the appropriate layers (`functional/` or `technical/`)
+
+That's it! Your application is now organized with OSDD.
+
+### Import Paths
+
+**Disclaimer:** If you don't use Nuxt's auto-import feature, you may need to update your import paths. 
+
+OSDD provides aliases to access your layers:
 
 ```typescript
-import { OSDDLayers } from 'nuxt-osdd';
+// Import from a functional layer
+import { UserService } from '#functional/Users/services/UserService';
 
-// Returns ['./functional/Contracts', './technical/Authentication']
-OSDDLayers({ functional: ['Contracts'], technical: ['Authentication'] });
+// Import from a technical layer
+import { AuthAdapter } from '#technical/Authentication/adapters/AuthAdapter';
 ```
 
-## Project Structure
-
-```
-functional/     # Functional layers (business features)
-technical/      # Technical layers (infrastructure)
-src/
-  helpers/
-    OSDDLayers.ts           # Layer paths helper
-    OSDDTsConfig.ts         # TypeScript paths helper
-    defineOSDDNuxtConfig.ts # Nuxt config wrapper
-  scripts/
-    generateLayer.ts        # Layer generation logic
-```
-
-## Development
-
-### Local Setup
-
-```bash
-# Install dependencies
-npm install
-
-# Build project (compile TS → JS)
-npm run build
-
-# Build in watch mode (for development)
-npm run dev
-
-# Create symbolic link for local testing
-npm link
-
-# Generate a new layer (in development, uses tsx)
-npm run layer:make
-# or (uses compiled package)
-npx nuxt-osdd osdd:layer
-```
-
-### Testing in Another Project
-
-```bash
-cd /path/to/your/project
-npm link nuxt-osdd
-npx nuxt-osdd osdd:layer MyLayer --functional
-```
-
-### Architecture
-
-- **src/** : TypeScript source code
-  - **cli.ts** : CLI entry point
-  - **helpers/OSDDLayers.ts** : Layer paths helper
-  - **helpers/OSDDTsConfig.ts** : TypeScript paths helper
-  - **helpers/defineOSDDNuxtConfig.ts** : Nuxt config wrapper
-  - **scripts/generateLayer.ts** : Layer generation logic
-- **dist/** : Compiled JavaScript code + .d.ts files (generated by `npm run build`)
-  - Not included in git repository
-  - Included in published npm package
-
-### Publishing
-
-The `prepublishOnly` script automatically runs before publication and compiles the project:
-
-```bash
-npm publish
-```
 
 ## License
 
