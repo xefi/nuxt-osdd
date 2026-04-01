@@ -7,10 +7,11 @@ export interface LayerOptions {
     type: LayerType;
 }
 
-export interface NuxtTsConfigOverride {
-    compilerOptions?: {
-        paths?: Record<string, string[]>;
-    };
-    include?: string[];
-    exclude?: string[];
+export interface OSDDConfig {
+    functional?: string[];
+    technical?: string[];
 }
+
+export type OSDDNuxtConfig = NuxtConfig & {
+    osdd?: OSDDConfig;
+};

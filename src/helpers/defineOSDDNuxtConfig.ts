@@ -1,15 +1,6 @@
-import { type NuxtConfig } from '@nuxt/schema';
 import { defineNuxtConfig } from 'nuxt/config';
 import { OSDDLayers } from './OSDDLayers';
-import { OSDDTsConfig } from './OSDDTsConfig';
-
-interface OSDDConfig {
-    functional?: string[];
-    technical?: string[];
-}
-type OSDDNuxtConfig = NuxtConfig & {
-    osdd?: OSDDConfig;
-};
+import { OSDDNuxtConfig } from '../type';
 
 /**
  * Wraps `defineNuxtConfig` with OSDD layer support.
@@ -36,15 +27,5 @@ export const defineOSDDNuxtConfig = (config: OSDDNuxtConfig) => {
                     technical: config?.osdd?.technical ?? [],
                 })
             ],
-            typescript: {
-                ...config.typescript,
-                tsConfig: {
-                    ...OSDDTsConfig({
-                        functional: config?.osdd?.functional ?? [],
-                        technical: config?.osdd?.technical ?? [],
-                    }),
-                    ...(config.typescript?.tsConfig ?? {}),
-                }
-            }
         });
 };
