@@ -24,7 +24,7 @@ OSDD replaces Nuxt's default layers approach which adds unnecessary depth to you
 
 **Without OSDD** (Nuxt default):
 ```
-/layers/functional/layers/<functionalLayer>/nuxt.config.ts
+/layers/functional/<functionalLayer>/nuxt.config.ts
 ```
 
 **With OSDD**:
