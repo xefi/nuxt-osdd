@@ -134,8 +134,6 @@ That's it! Your application is now organized with OSDD.
 
 **Disclaimer:** If you don't use Nuxt's auto-import feature, you may need to update your import paths. 
 
-OSDD provides aliases to access your layers:
-
 ```typescript
 // Import from a functional layer
 import { UserService } from '~/functional/Users/services/UserService';
