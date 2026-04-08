@@ -138,10 +138,10 @@ OSDD provides aliases to access your layers:
 
 ```typescript
 // Import from a functional layer
-import { UserService } from '#functional/Users/services/UserService';
+import { UserService } from '~/functional/Users/services/UserService';
 
 // Import from a technical layer
-import { AuthAdapter } from '#technical/Authentication/adapters/AuthAdapter';
+import { AuthAdapter } from '~/technical/Authentication/adapters/AuthAdapter';
 ```
 
 
