@@ -1,6 +1,6 @@
 # nuxt-osdd
 
-**nuxt-osdd** brings Open Source Driven Development to Nuxt. Organize your application into independent, composable layers — each layer with its own components, composables, pages, and configuration.
+[**nuxt-osdd**](https://nuxt-osdd.xefi.com/) brings Open Source Driven Development to Nuxt. Organize your application into independent, composable layers — each layer with its own components, composables, pages, and configuration.
 
 ## Why OSDD?
 
