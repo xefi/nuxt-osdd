@@ -1,6 +1,6 @@
 # nuxt-osdd
 
-**nuxt-osdd** brings Open Source Driven Development to Nuxt. Organize your application into independent, composable layers — each layer with its own components, composables, pages, and configuration.
+[**nuxt-osdd**](https://nuxt-osdd.xefi.com/) brings Open Source Driven Development to Nuxt. Organize your application into independent, composable layers — each layer with its own components, composables, pages, and configuration.
 
 ## Why OSDD?
 
@@ -24,7 +24,7 @@ OSDD replaces Nuxt's default layers approach which adds unnecessary depth to you
 
 **Without OSDD** (Nuxt default):
 ```
-/layers/functional/layers/<functionalLayer>/nuxt.config.ts
+/layers/functional/<functionalLayer>/nuxt.config.ts
 ```
 
 **With OSDD**:
@@ -134,14 +134,12 @@ That's it! Your application is now organized with OSDD.
 
 **Disclaimer:** If you don't use Nuxt's auto-import feature, you may need to update your import paths. 
 
-OSDD provides aliases to access your layers:
-
 ```typescript
 // Import from a functional layer
-import { UserService } from '#functional/Users/services/UserService';
+import { UserService } from '~/functional/Users/services/UserService';
 
 // Import from a technical layer
-import { AuthAdapter } from '#technical/Authentication/adapters/AuthAdapter';
+import { AuthAdapter } from '~/technical/Authentication/adapters/AuthAdapter';
 ```
 
 
